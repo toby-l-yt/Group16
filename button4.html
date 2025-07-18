@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>大館 最終謎題</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=New+Tegomin:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <img
+    src="https://replit.com/@tobyleeyt0118/HKYAS-Group16-project#background/background.PNG"
+    class="background"
+    alt="background"
+    title="background"
+  >
+  <div class="container">
+    <h1>大館 最終謎題</h1>
+    <div class="clue-box">
+      <br>
+      <input type="text" id="answer1" placeholder="答案">
+      <br><br>
+      <button onclick="checkAnswer()">SUBMIT</button>
+      <p id="result"></p>
+      <br><br>
+      <a href="index.html" class="return">回到主頁</a>
+    </div>
+  </div>
+  <script>
+    function checkAnswer() {
+      // Get value without case conversion
+      const answer1 = document.getElementById("answer1").value.trim();
+
+      // Check answer (case-sensitive)
+      if (answer1.includes("Reintegration")) {  // Added missing parenthesis
+        document.getElementById("result").innerHTML = `
+          ✅ 答案正確! 最終地點的提示: <br> 
+          於層層軟土之中 這裡&那裡
+        `;  // Fixed template string
+      } else {
+        document.getElementById("result").innerHTML = "❌ 答案錯誤";
+      }
+    }
+  </script>
+</body>
+</html>

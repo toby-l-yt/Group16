@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>地點B 提示</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=New+Tegomin:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <img
+          src="https://replit.com/@tobyleeyt0118/HKYAS-Group16-project#background/background.PNG"
+          class="background"
+          alt="background"
+          title="background"
+       >
+  <div class="container">
+    <h1>地點B 提示</h1>
+    <div class="clue-box">
+      <p>1. 公所曾作為區內_________的場所。</p>
+      <input type="text" id="answer1" placeholder="答案">
+      <p>2. 文武廟於____年被列入為法定古蹟。 (數字）</p>
+      <input type="text" id="answer2" placeholder="答案">
+      <p>3. 代表「神靈保佑眾生」的匾額</p>
+      <input type="text" id="answer3" placeholder="答案">
+      <br /><br /><button onclick="checkAnswer()">SUBMIT</button>
+      <p id="result"></p>
+      <br /><br />
+      <a href="index.html" class="return">回到主頁</a>
+    </div>
+  </div>
+  <script>
+    function checkAnswer() {
+  // Get values without case conversion
+  const answer1 = document.getElementById("answer1").value;
+  const answer2 = document.getElementById("answer2").value;
+  const answer3 = document.getElementById("answer3").value;
+
+  // Check answers (now case-sensitive)
+  if (answer1.includes("華人議事及排難解紛") && answer2.includes("2010") && answer3.includes("神威普佑")) {
+    document.getElementById("result").innerHTML = `
+    ✅ 答案正確! Next clue: <br />
+    <img src="clue/clue1.png" 
+         class="clue" 
+         alt="clue"
+         title="clue">
+  `;
+  } else {
+    document.getElementById("result").innerHTML = "❌ 答案錯誤";
+  }
+}
+
+  </script>
+</body>
+</html>

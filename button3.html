@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>大館 錄音</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=New+Tegomin:wght@400;700&display=swap" rel="stylesheet">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https://* blob: data:; media-src 'self' blob: data:;">
+</head>
+<body>
+  <img
+    src="https://replit.com/@tobyleeyt0118/HKYAS-Group16-project#background/background.PNG"
+    class="background"
+    alt="background"
+    title="background"
+  >
+  <div class="container">
+    <h1>大館 錄音</h1>
+
+    <!-- Audio Player -->
+    <audio id="myAudio" preload="auto">
+      <source src="Audio/story.mp3" type="audio/mpeg">
+      Your browser does not support audio playback.
+    </audio>
+
+    <button id="playButton" class="horror-button">▶️ 播放錄音</button>
+    <p id="audioStatus"></p>
+    <div class="clue-box">
+      <p>A:已婚警察宿舍 
+        B:營房大樓 
+        C:監倉</p>
+      <input type="text" id="answer1" placeholder="答案">
+
+      <br /><br /><button onclick="checkAnswer()">SUBMIT</button>
+      <p id="result"></p>
+    <a href="index.html" class="return">回到主頁</a>
+  </div>
+
+    <script>
+      const audio = document.getElementById('myAudio');
+      const playButton = document.getElementById('playButton');
+      const audioStatus = document.getElementById('audioStatus');
+
+      // 1. Set initial state
+      audio.volume = 0.7;
+      audio.preload = "auto"; // Preload metadata
+
+      // 2. Handle loading progress
+      audio.addEventListener('progress', () => {
+        if (audio.buffered.length > 0) {
+          const percentLoaded = (audio.buffered.end(0) / audio.duration * 100);
+          audioStatus.textContent = `加載中... ${Math.round(percentLoaded)}%`;
+        }
+      });
+
+      // 3. Timeout if audio doesn't load in 10s
+      const loadTimeout = setTimeout(() => {
+        if (audio.readyState < 2) { // 0-1 = not loaded
+          audioStatus.textContent = "❌ 音頻加載失敗 (文件可能損壞或路徑錯誤)";
+        }
+      }, 10000);
+
+      audio.addEventListener('canplay', () => {
+        clearTimeout(loadTimeout);
+        audioStatus.textContent = "準備就緒，點擊播放";
+      });
+
+      // 4. Reliable play button
+      playButton.addEventListener('click', async () => {
+        try {
+          if (!audio.paused) {
+            audio.pause();
+            playButton.textContent = "▶️ 播放錄音";
+            return;
+          }
+
+          playButton.disabled = true;
+          await audio.play();
+          playButton.textContent = "⏸️ 暫停錄音";
+        } catch (err) {
+          audioStatus.textContent = "❌ 播放失敗: " + err.message;
+        } finally {
+          playButton.disabled = false;
+        }
+      });
+
+      // 5. Start loading
+      audio.load();
+
+      function checkAnswer() {
+        const answer1 = document.getElementById("answer1").value;
+        document.getElementById("result").innerHTML = 
+          answer1.includes("C") ? "✅ 答案正確! C:監倉" : "❌ 答案錯誤";
+      }
+    </script>
+</body>
+</html>

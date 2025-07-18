@@ -1,0 +1,244 @@
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  /* Remove current background-color */
+  background: 
+    /* Top Image (your existing) */
+      url('background/background.PNG') center top/100% auto no-repeat,
+
+    /* Bottom Image (new) */
+    url('background/background2.jpeg') center bottom/100% auto no-repeat,
+
+    /* Black Fallback */
+    #000000;
+  z-index: -1;
+}
+
+
+
+.container {
+  position: relative; /* Positions container normally */
+  z-index: 1; /* Brings container above background */
+  background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  border-radius: 10px;
+  border: 2px solid #5e0000;
+  padding: 30px;
+  width: 75%;
+  max-width: 1000px;
+  margin: 600px auto; 
+  color: white;
+  text-align: center;
+}
+
+/* Keep your existing button styles */
+.buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.btn {
+  /* Base style */
+  background: #1a0000; /* Dark blood color */
+  color: #ff4d4d; /* Blood red text */
+  padding: 18px 30px;
+  border: 2px solid #5e0000;
+  border-radius: 10px; /* Sharp edges for creepiness */
+  font-family: 'New Tegomin', cursive; /* Horror font */
+  font-size: 50px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+ } 
+
+/* Click effect */
+.btn:active {
+  background: #000000;
+  transform: translateY(2px);
+}
+
+@font-face {
+  font-family: 'KouzanBrush';
+  src: url('KouzanBrushFont.ttf') format('truetype');
+  font-display: swap;
+}
+
+h1 {
+  font-family: 'New Tegomin', cursive;
+  font-size: 4rem;
+  color: #e60000;
+  text-shadow: 
+    5px 5px 0 #330000,
+    10px 10px 0 #000;
+  letter-spacing: 3px;
+  line-height: 1;
+  margin: 20px 0;
+  position: relative;
+}
+
+/* Ink drip effect */
+h1::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: 
+    radial-gradient(ellipse at center, 
+      rgba(230,0,0,0.8) 0%, 
+      rgba(0,0,0,0) 70%);
+}
+
+.return {
+  /* Base style */
+  background: #1a0000; /* Dark blood color */
+  color: #ff4d4d; /* Blood red text */
+  padding: 10px 20px;
+  border: 2px solid #5e0000;
+  border-radius: 10px; /* Sharp edges for creepiness */
+  font-family: 'New Tegomin', cursive; /* Horror font */
+  font-size: 30px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+ } 
+
+/* Click effect */
+.return:active {
+  background: #000000;
+  transform: translateY(2px);
+}
+
+.clue-box{
+  color: white;
+  font-family: 'New Tegomin', cursive;
+  font-size: 2rem;
+}
+
+#fallbackPlay {
+  display: none; /* Hidden unless needed */
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #8b0000;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 100;
+}
+
+.horror-button {
+  /* Size Enhancements */
+  font-size: 2rem;                /* 66% larger text */
+  padding: 20px 40px;             /* Bigger click area */
+  min-width: 250px;               /* Wider minimum size */
+
+  /* Visual Enhancements */
+  background: #5e0000;
+  color: #ff4d4d;
+  border: 3px solid #300000;      /* Thicker border */
+  font-family: 'New Tegomin', cursive;
+  cursor: pointer;
+  text-shadow: 0 0 5px #000;      /* More pronounced shadow */
+  box-shadow: 0 0 15px #ff00004d; /* Glowing red effect */
+  transition: all 0.3s;
+  border-radius: 8px;             /* Slightly rounded corners */
+
+  /* Center contents better */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Hover effects for extra creepiness */
+.horror-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #ff000080;
+  text-shadow: 0 0 8px #000;
+}
+
+/* Active/pressed state */
+.horror-button:active {
+  transform: scale(0.98);
+  background: #4a0000;
+}
+
+.horror-button:hover {
+  background: #8b0000;
+  transform: translateY(-2px);
+}
+
+#submitBtn {
+  background: #5e0000;
+  color: #ff4d4d;
+  border: 2px solid #300000;
+  padding: 15px 30px;
+  font-family: 'New Tegomin', cursive;
+  font-size: 1.5rem;
+  cursor: pointer;
+  text-shadow: 0 0 5px #000;
+  letter-spacing: 2px;
+  margin: 20px 0;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+#submitBtn:hover {
+  background: #8b0000;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+#submitBtn:active {
+  transform: translateY(1px);
+  background: #3a0000;
+}
+
+.clue-box button {
+  font-size: 1.2rem; /* Makes button text larger */
+  padding: 10px 20px; /* Makes button itself larger */
+  margin-top: 15px; /* Adds space above button */
+}
+
+#answer1 {
+  font-size: 1.3rem;
+  padding: 12px 15px;
+  width: 200px;
+  height: 40px;
+  border: 2px solid #ccc;
+  border-radius: 5px;  /* Slightly rounded corners */
+}
+
+#answer2 {
+  font-size: 1.3rem;
+  padding: 12px 15px;
+  width: 200px;
+  height: 40px;
+  border: 2px solid #ccc;
+  border-radius: 5px;  /* Slightly rounded corners */
+}
+
+#answer3 {
+  font-size: 1.3rem;
+  padding: 12px 15px;
+  width: 200px;
+  height: 40px;
+  border: 2px solid #ccc;
+  border-radius: 5px;  /* Slightly rounded corners */
+}
+
+.clue-img img {
+  max-width: 100%;        /* Scales down if too wide */
+  max-height: 90vh;       /* Prevents vertical overflow */
+  height: auto;           /* Maintains aspect ratio */
+  object-fit: contain;    /* Ensures full image is visible */
+}
