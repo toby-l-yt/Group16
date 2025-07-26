@@ -50,6 +50,53 @@
     </div>
   </div>
   <script>
+          const audio = document.getElementById('myAudio');
+      const playButton = document.getElementById('playButton');
+      const audioStatus = document.getElementById('audioStatus');
+
+      // 1. Set initial state
+      audio.volume = 0.7;
+      audio.preload = "auto"; // Preload metadata
+
+      // 2. Handle loading progress
+      audio.addEventListener('progress', () => {
+        if (audio.buffered.length > 0) {
+          const percentLoaded = (audio.buffered.end(0) / audio.duration * 100);
+          audioStatus.textContent = `加載中... ${Math.round(percentLoaded)}%`;
+        }
+      });
+
+      // 3. Timeout if audio doesn't load in 10s
+      const loadTimeout = setTimeout(() => {
+        if (audio.readyState < 2) { // 0-1 = not loaded
+          audioStatus.textContent = "❌ 音頻加載失敗 (文件可能損壞或路徑錯誤)";
+        }
+      }, 10000);
+
+      audio.addEventListener('canplay', () => {
+        clearTimeout(loadTimeout);
+        audioStatus.textContent = "準備就緒，點擊播放";
+      });
+
+      // 4. Reliable play button
+      playButton.addEventListener('click', async () => {
+        try {
+          if (!audio.paused) {
+            audio.pause();
+            playButton.textContent = "▶️ 播放錄音";
+            return;
+          }
+
+          playButton.disabled = true;
+          await audio.play();
+          playButton.textContent = "⏸️ 暫停錄音";
+        } catch (err) {
+          audioStatus.textContent = "❌ 播放失敗: " + err.message;
+        } finally {
+          playButton.disabled = false;
+        }
+      });
+    
     function checkAnswer() {
   // Get values without case conversion
       const answer1 = document.getElementById("answer1").value;
