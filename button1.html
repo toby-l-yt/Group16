@@ -104,29 +104,38 @@
       const answer3 = document.getElementById("answer3").value;
 
       // Check answers (now case-sensitive)
-      if (answer1.includes("mourn") && answer2.includes("幻痛遺緒") && answer3.includes("phantom sentiment"))
- 
-{
-  document.getElementById("result").innerHTML = `
-    ✅ 答案正確!
-    <audio id="successAudio" preload="auto">
-      <source src="Audio/必列2.2.mp3" type="audio/mpeg">
-      Your browser does not support audio playback.
-    </audio>
-    <button onclick="document.getElementById('successAudio').play()" class="horror-button">
-      ▶️ 播放錄音
-    </button>
-    <p id="audioStatus"></p>
-  `;
-  
-  // Add event listener for the new button
-  document.getElementById('successAudio').addEventListener('play', function() {
-    document.getElementById('audioStatus').textContent = '播放中...';
-  });
-  
-  document.getElementById('successAudio').addEventListener('pause', function() {
-    document.getElementById('audioStatus').textContent = '';
-  });
+      if (answer1.includes("mourn") && 
+        answer2.includes("幻痛遺緒") && 
+        answer3.includes("phantom sentiment")) {
+      
+      document.getElementById("result").innerHTML = `
+        ✅ 答案正確!
+        <audio id="successAudio" preload="auto">
+          <source src="Audio/必列2.2.mp3" type="audio/mpeg">
+        </audio>
+        <button id="successPlayBtn" class="horror-button">▶️ 播放成功音效</button>
+        <p id="audioStatus2"></p>
+      `;
+      
+      // Add event listeners AFTER the elements exist
+      const successAudio = document.getElementById('successAudio');
+      const successBtn = document.getElementById('successPlayBtn');
+      const status2 = document.getElementById('audioStatus2');
+      
+      successBtn.addEventListener('click', function() {
+        if(successAudio.paused) {
+          successAudio.play()
+            .then(() => {
+              successBtn.textContent = "⏸️ 暫停音效";
+              status2.textContent = "播放中...";
+            })
+            .catch(e => status2.textContent = "播放失敗: " + e.message);
+        } else {
+          successAudio.pause();
+          successBtn.textContent = "▶️ 播放成功音效";
+          status2.textContent = "";
+        }
+      });
   
 } else {
   document.getElementById("result").innerHTML = "❌ 答案錯誤";
