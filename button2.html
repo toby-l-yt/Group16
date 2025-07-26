@@ -25,7 +25,7 @@
       <input type="text" id="answer1" placeholder="答案">
       <p>2. 文武廟於____年被列入為法定古蹟。 (數字）</p>
       <input type="text" id="answer2" placeholder="答案">
-      <br><br><button id="submitBtn1" >SUBMIT</button>
+      <br><br><button id="submitBtn1" class="horror-button">SUBMIT</button>
       <p id="result1"></p>
       <div id="nextClue"></div>
       <br><br>
@@ -84,7 +84,7 @@
           <img src="clue/clue1.png" class="clue" alt="clue" title="clue">
           </p>
           <input type="text" id="answer3" placeholder="解謎答案">
-          <button id="submitBtn2" >SUBMIT</button>
+          </p><button id="submitBtn2" class="horror-button">SUBMIT</button>
           <p id="result2"></p>
         `;
         
@@ -95,6 +95,7 @@
           if (answer3.includes("remnant echo")) {
             document.getElementById("result2").innerHTML = `
               ✅ 答案正確! 
+              </p>
               <audio id="successAudio" preload="auto">
                 <source src="Audio/B2.mp3" type="audio/mpeg">
               </audio>
