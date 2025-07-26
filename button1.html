@@ -13,10 +13,19 @@
           title="background"
        >
   <div class="container">
-    <h1>地點A 謎題</h1>
+    <h1>地點A</h1>
     <div class="clue-img">
+       <!-- Audio Player -->
+    <audio id="myAudio" preload="auto">
+      <source src="Audio/必列1.3.mp3" type="audio/mpeg">
+      Your browser does not support audio playback.
+    </audio>
+
+    <button id="playButton" class="horror-button">▶️ 播放錄音</button>
+    <p id="audioStatus"></p>
+      
       <img
-        src="clue/clue3.png"
+        src="clue/clue3.png">
         </div>
     <div class="clue-box">
       <p>un_____ed</p>
@@ -25,7 +34,7 @@
       <br /><br />
       <div class="clue-img">
         <img
-          src="clue/clue4.png"
+          src="clue/clue4.png">
           </div>
       <div class="clue-box">
         <p>中文謎底</p>
@@ -50,14 +59,32 @@
       // Check answers (now case-sensitive)
       if (answer1.includes("mourn") && answer2.includes("幻痛遺緒") && answer3.includes("phantom sentiment"))
  
-  {
-    document.getElementById("result").innerHTML = `
-    ✅ 答案正確! 
+{
+  document.getElementById("result").innerHTML = `
+    ✅ 答案正確!
+    <audio id="successAudio" preload="auto">
+      <source src="Audio/必列2.2.mp3" type="audio/mpeg">
+      Your browser does not support audio playback.
+    </audio>
+    <button onclick="document.getElementById('successAudio').play()" class="horror-button">
+      ▶️ 播放錄音
+    </button>
+    <p id="audioStatus"></p>
   `;
-  } else {
-    document.getElementById("result").innerHTML = "❌ 答案錯誤";
-  }
+  
+  // Add event listener for the new button
+  document.getElementById('successAudio').addEventListener('play', function() {
+    document.getElementById('audioStatus').textContent = '播放中...';
+  });
+  
+  document.getElementById('successAudio').addEventListener('pause', function() {
+    document.getElementById('audioStatus').textContent = '';
+  });
+  
+} else {
+  document.getElementById("result").innerHTML = "❌ 答案錯誤";
 }
+
 
   </script>
 </body>
