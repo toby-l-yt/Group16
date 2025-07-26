@@ -1,50 +1,134 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>地點B 提示</title>
+  <title>地點B 提示及解謎</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=New+Tegomin:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <img
-          src="https://replit.com/@tobyleeyt0118/HKYAS-Group16-project#background/background.PNG"
-          class="background"
-          alt="background"
-          title="background"
-       >
+  <img src="https://replit.com/@tobyleeyt0118/HKYAS-Group16-project#background/background.PNG"
+       class="background"
+       alt="background"
+       title="background">
+  
   <div class="container">
-    <h1>地點B 提示</h1>
+    <h1>地點B 提示及解謎</h1>
+    <!-- First Audio Player -->
+    <audio id="myAudio" preload="auto">
+      <source src="Audio/必列1.3.mp3" type="audio/mpeg">
+    </audio>
+    <button id="playButton" class="horror-button">▶️ 播放錄音</button>
+    <p id="audioStatus"></p>
+    
     <div class="clue-box">
       <p>1. 公所曾作為區內_________的場所。</p>
       <input type="text" id="answer1" placeholder="答案">
       <p>2. 文武廟於____年被列入為法定古蹟。 (數字）</p>
       <input type="text" id="answer2" placeholder="答案">
-      <br /><br /><button onclick="checkAnswer()">SUBMIT</button>
-      <p id="result"></p>
-      <br /><br />
+      <br><br><button id="submitBtn1" >SUBMIT</button>
+      <p id="result1"></p>
+      <div id="nextClue"></div>
+      <br><br>
       <a href="index.html" class="return">回到主頁</a>
     </div>
   </div>
+
   <script>
-    function checkAnswer() {
-  // Get values without case conversion
-  const answer1 = document.getElementById("answer1").value;
-  const answer2 = document.getElementById("answer2").value;
+    // First audio player
+    const firstAudio = document.getElementById('myAudio');
+    const playButton = document.getElementById('playButton');
+    const audioStatus = document.getElementById('audioStatus');
+    
+    // Initialize audio settings
+    firstAudio.volume = 0.7;
+    firstAudio.preload = "auto";
+    
+    // Loading state handlers
+    firstAudio.addEventListener('loadedmetadata', () => {
+      audioStatus.textContent = "準備就緒，點擊播放";
+    });
+    
+    firstAudio.addEventListener('error', () => {
+      audioStatus.textContent = "❌ 音頻加載失敗 (請檢查文件路徑)";
+      console.error("Audio load error:", firstAudio.error);
+    });
+    
+    // Play/pause control
+    playButton.addEventListener('click', () => {
+      if (firstAudio.paused) {
+        firstAudio.play()
+          .then(() => {
+            playButton.textContent = "⏸️ 暫停錄音";
+            audioStatus.textContent = "播放中...";
+          })
+          .catch(error => {
+            audioStatus.textContent = "❌ 播放失敗: " + error.message;
+            console.error("Playback failed:", error);
+          });
+      } else {
+        firstAudio.pause();
+        playButton.textContent = "▶️ 播放錄音";
+        audioStatus.textContent = "已暫停";
+      }
+    });
+    
+    // First submit button
+    document.getElementById('submitBtn1').addEventListener('click', function() {
+      const answer1 = document.getElementById("answer1").value;
+      const answer2 = document.getElementById("answer2").value;
 
-  // Check answers (now case-sensitive)
-  if (answer1.includes("華人議事及排難解紛") && answer2.includes("2010")) {
-    document.getElementById("result").innerHTML = `
-    ✅ 答案正確! Next clue: <br />
-    <img src="clue/clue1.png" 
-         class="clue" 
-         alt="clue"
-         title="clue">
-  `;
-  } else {
-    document.getElementById("result").innerHTML = "❌ 答案錯誤";
-  }
-}
-
+      if (answer1.includes("華人議事及排難解紛") && answer2.includes("2010")) {
+        document.getElementById("result1").innerHTML = "✅ 答案正確!";
+        document.getElementById("nextClue").innerHTML = `
+          Next clue: <br />
+          <img src="clue/clue1.png" class="clue" alt="clue" title="clue">
+          </p>
+          <input type="text" id="answer3" placeholder="解謎答案">
+          <button id="submitBtn2" >SUBMIT</button>
+          <p id="result2"></p>
+        `;
+        
+        // Second submit button
+        document.getElementById('submitBtn2').addEventListener('click', function() {
+          const answer3 = document.getElementById("answer3").value.toLowerCase();
+          
+          if (answer3.includes("remnant echo")) {
+            document.getElementById("result2").innerHTML = `
+              ✅ 答案正確! 
+              <audio id="successAudio" preload="auto">
+                <source src="Audio/B2.mp3" type="audio/mpeg">
+              </audio>
+              <button id="successPlayBtn" class="horror-button">▶️ 播放解謎導賞</button>
+              <p id="audioStatus2"></p>
+            `;
+            
+            // Success audio player
+            const successAudio = document.getElementById('successAudio');
+            const successBtn = document.getElementById('successPlayBtn');
+            const status2 = document.getElementById('audioStatus2');
+            
+            successBtn.addEventListener('click', () => {
+              if (successAudio.paused) {
+                successAudio.play()
+                  .then(() => {
+                    successBtn.textContent = "⏸️ 暫停音效";
+                    status2.textContent = "播放中...";
+                  })
+                  .catch(e => status2.textContent = "播放失敗: " + e.message);
+              } else {
+                successAudio.pause();
+                successBtn.textContent = "▶️ 播放成功音效";
+                status2.textContent = "已暫停";
+              }
+            });
+          } else {
+            document.getElementById("result2").innerHTML = "❌ 答案錯誤";
+          }
+        });
+      } else {
+        document.getElementById("result1").innerHTML = "❌ 答案錯誤";
+      }
+    });
   </script>
 </body>
 </html>
