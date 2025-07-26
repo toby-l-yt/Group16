@@ -18,7 +18,7 @@
     <audio id="myAudio" preload="auto">
       <source src="Audio/A1a.mp3" type="audio/mpeg">
     </audio>
-    <button id="playButton">▶️ 播放錄音</button>
+    <button id="playButton" class="horror-button">▶️ 播放錄音</button>
     <p id="audioStatus"></p>
     
     <div class="clue-img">
@@ -102,7 +102,7 @@
             answer3.includes("phantom sentiment")) {
           
           document.getElementById("result").innerHTML = `
-            ✅ 答案正確!
+            ✅ 答案正確!</p>
             <audio id="successAudio" preload="auto">
               <source src="Audio/A2.mp3" type="audio/mpeg">
             </audio>
