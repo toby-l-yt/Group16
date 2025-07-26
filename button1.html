@@ -6,142 +6,136 @@
   <link href="https://fonts.googleapis.com/css2?family=New+Tegomin:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <img
-          src="https://replit.com/@tobyleeyt0118/HKYAS-Group16-project#background/background.PNG"
-          class="background"
-          alt="background"
-          title="background"
-       >
+  <img src="https://replit.com/@tobyleeyt0118/HKYAS-Group16-project#background/background.PNG"
+       class="background"
+       alt="background"
+       title="background">
+  
   <div class="container">
     <h1>地點A</h1>
-    <div class="clue-img">
-       <!-- Audio Player -->
+    
+    <!-- First Audio Player -->
     <audio id="myAudio" preload="auto">
       <source src="Audio/A1.mp3" type="audio/mpeg">
-      Your browser does not support audio playback.
     </audio>
-
     <button id="playButton" class="horror-button">▶️ 播放錄音</button>
     <p id="audioStatus"></p>
-      
-      <img
-        src="clue/clue3.png">
-        </div>
+    
+    <div class="clue-img">
+      <img src="clue/clue3.png" alt="Clue 3">
+    </div>
+    
     <div class="clue-box">
       <p>un_____ed</p>
       <input type="text" id="answer1" placeholder="答案">
-     
-      <br /><br />
+      
       <div class="clue-img">
-        <img
-          src="clue/clue4.png">
-          </div>
-      <div class="clue-box">
-        <p>中文謎底</p>
-        <input type="text" id="answer2" placeholder="答案">
-        <p>英文謎底(全小寫)</p>
-        <input type="text" id="answer3" placeholder="答案">
-
-        <br /><br />
-      <button onclick="checkAnswer()">SUBMIT</button>
+        <img src="clue/clue4.png" alt="Clue 4">
+      </div>
+      
+      <p>中文謎底</p>
+      <input type="text" id="answer2" placeholder="答案">
+      <p>英文謎底(全小寫)</p>
+      <input type="text" id="answer3" placeholder="答案">
+      
+      <button id="submitBtn" class="horror-button">SUBMIT</button>
       <p id="result"></p>
-      <br /><br />
       <a href="index.html" class="return">回到主頁</a>
     </div>
   </div>
+
   <script>
-          const audio = document.getElementById('myAudio');
-      const playButton = document.getElementById('playButton');
-      const audioStatus = document.getElementById('audioStatus');
+    // First audio player
+    const audio = document.getElementById('myAudio');
+    const playButton = document.getElementById('playButton');
+    const audioStatus = document.getElementById('audioStatus');
 
-      // 1. Set initial state
-      audio.volume = 0.7;
-      audio.preload = "auto"; // Preload metadata
+    // Initialize first audio player
+    audio.volume = 0.7;
+    audio.preload = "auto";
 
-      // 2. Handle loading progress
-      audio.addEventListener('progress', () => {
-        if (audio.buffered.length > 0) {
-          const percentLoaded = (audio.buffered.end(0) / audio.duration * 100);
-          audioStatus.textContent = `加載中... ${Math.round(percentLoaded)}%`;
+    audio.addEventListener('progress', () => {
+      if (audio.buffered.length > 0) {
+        const percentLoaded = (audio.buffered.end(0) / audio.duration * 100);
+        audioStatus.textContent = `加載中... ${Math.round(percentLoaded)}%`;
+      }
+    });
+
+    const loadTimeout = setTimeout(() => {
+      if (audio.readyState < 2) {
+        audioStatus.textContent = "❌ 音頻加載失敗";
+      }
+    }, 10000);
+
+    audio.addEventListener('canplay', () => {
+      clearTimeout(loadTimeout);
+      audioStatus.textContent = "準備就緒，點擊播放";
+    });
+
+    playButton.addEventListener('click', async () => {
+      try {
+        if (!audio.paused) {
+          audio.pause();
+          playButton.textContent = "▶️ 播放錄音";
+          return;
         }
-      });
+        playButton.disabled = true;
+        await audio.play();
+        playButton.textContent = "⏸️ 暫停錄音";
+      } catch (err) {
+        audioStatus.textContent = "❌ 播放失敗: " + err.message;
+      } finally {
+        playButton.disabled = false;
+      }
+    });
 
-      // 3. Timeout if audio doesn't load in 10s
-      const loadTimeout = setTimeout(() => {
-        if (audio.readyState < 2) { // 0-1 = not loaded
-          audioStatus.textContent = "❌ 音頻加載失敗 (文件可能損壞或路徑錯誤)";
+    // Event delegation for all buttons
+    document.addEventListener('click', function(e) {
+      // Handle submit button
+      if (e.target && e.target.id === 'submitBtn') {
+        const answer1 = document.getElementById("answer1").value.toLowerCase();
+        const answer2 = document.getElementById("answer2").value;
+        const answer3 = document.getElementById("answer3").value.toLowerCase();
+
+        if (answer1.includes("mourn") && 
+            answer2.includes("幻痛遺緒") && 
+            answer3.includes("phantom sentiment")) {
+          
+          document.getElementById("result").innerHTML = `
+            ✅ 答案正確!
+            <audio id="successAudio" preload="auto">
+              <source src="Audio/A2.mp3" type="audio/mpeg">
+            </audio>
+            <button id="successPlayBtn" class="horror-button">▶️ 播放成功音效</button>
+            <p id="audioStatus2"></p>
+          `;
+        } else {
+          document.getElementById("result").innerHTML = "❌ 答案錯誤";
         }
-      }, 10000);
-
-      audio.addEventListener('canplay', () => {
-        clearTimeout(loadTimeout);
-        audioStatus.textContent = "準備就緒，點擊播放";
-      });
-
-      // 4. Reliable play button
-      playButton.addEventListener('click', async () => {
-        try {
-          if (!audio.paused) {
-            audio.pause();
-            playButton.textContent = "▶️ 播放錄音";
-            return;
-          }
-
-          playButton.disabled = true;
-          await audio.play();
-          playButton.textContent = "⏸️ 暫停錄音";
-        } catch (err) {
-          audioStatus.textContent = "❌ 播放失敗: " + err.message;
-        } finally {
-          playButton.disabled = false;
-        }
-      });
-    
-    function checkAnswer() {
-  // Get values without case conversion
-      const answer1 = document.getElementById("answer1").value;
-      const answer2 = document.getElementById("answer2").value;
-      const answer3 = document.getElementById("answer3").value;
-
-      // Check answers (now case-sensitive)
-      if (answer1.includes("mourn") && 
-        answer2.includes("幻痛遺緒") && 
-        answer3.includes("phantom sentiment")) {
+      }
       
-      document.getElementById("result").innerHTML = `
-        ✅ 答案正確!
-        <audio id="successAudio" preload="auto">
-          <source src="Audio/A2.mp3" type="audio/mpeg">
-        </audio>
-        <button id="successPlayBtn" class="horror-button">▶️ 播放成功音效</button>
-        <p id="audioStatus2"></p>
-      `;
-      
-      // Add event listeners AFTER the elements exist
-      const successAudio = document.getElementById('successAudio');
-      const successBtn = document.getElementById('successPlayBtn');
-      const status2 = document.getElementById('audioStatus2');
-      
-      successBtn.addEventListener('click', function() {
-        if(successAudio.paused) {
+      // Handle success audio button
+      if (e.target && e.target.id === 'successPlayBtn') {
+        const successAudio = document.getElementById('successAudio');
+        const status2 = document.getElementById('audioStatus2');
+        const btn = e.target;
+        
+        if (successAudio.paused) {
           successAudio.play()
             .then(() => {
-              successBtn.textContent = "⏸️ 暫停音效";
-              status2.textContent = "播放中...";
+              btn.textContent = "⏸️ 暫停音效";
+              if (status2) status2.textContent = "播放中...";
             })
-            .catch(e => status2.textContent = "播放失敗: " + e.message);
+            .catch(e => {
+              if (status2) status2.textContent = "播放失敗: " + e.message;
+            });
         } else {
           successAudio.pause();
-          successBtn.textContent = "▶️ 播放成功音效";
-          status2.textContent = "";
+          btn.textContent = "▶️ 播放成功音效";
+          if (status2) status2.textContent = "";
         }
-      });
-  
-} else {
-  document.getElementById("result").innerHTML = "❌ 答案錯誤";
-}
-
-
+      }
+    });
   </script>
 </body>
 </html>
