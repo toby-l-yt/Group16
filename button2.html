@@ -83,7 +83,7 @@
           Next clue: <br />
           <img src="clue/clue1.png" class="clue" alt="clue" title="clue">
           </p>
-           Remnant ____ </p>
+           Remnant ____<br />
           <input type="text" id="answer3" placeholder="解謎答案">
          
           </p><button id="submitBtn2" class="horror-button">SUBMIT</button>
@@ -94,7 +94,7 @@
         document.getElementById('submitBtn2').addEventListener('click', function() {
           const answer3 = document.getElementById("answer3").value.toLowerCase();
           
-          if (answer3.includes("remnant echo")) {
+          if (answer3.includes("echo")) {
             document.getElementById("result2").innerHTML = `
               ✅ 答案正確! 
               </p>
